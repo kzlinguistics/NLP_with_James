@@ -1,0 +1,87 @@
+2022-07-20 21:56:27,322 - INFO - allennlp.common.params - random_seed = 13370
+2022-07-20 21:56:27,322 - INFO - allennlp.common.params - numpy_seed = 1337
+2022-07-20 21:56:27,323 - INFO - allennlp.common.params - pytorch_seed = 133
+2022-07-20 21:56:27,323 - INFO - allennlp.common.checks - Pytorch version: 1.4.0
+2022-07-20 21:56:27,324 - INFO - allennlp.common.params - type = default
+2022-07-20 21:56:27,324 - INFO - allennlp.common.params - dataset_reader.type = snli
+2022-07-20 21:56:27,324 - INFO - allennlp.common.params - dataset_reader.lazy = False
+2022-07-20 21:56:27,324 - INFO - allennlp.common.params - dataset_reader.cache_directory = None
+2022-07-20 21:56:27,324 - INFO - allennlp.common.params - dataset_reader.max_instances = None
+2022-07-20 21:56:27,324 - INFO - allennlp.common.params - dataset_reader.tokenizer = None
+2022-07-20 21:56:27,325 - INFO - allennlp.common.params - dataset_reader.token_indexers.tokens.type = single_id
+2022-07-20 21:56:27,325 - INFO - allennlp.common.params - dataset_reader.token_indexers.tokens.namespace = tokens
+2022-07-20 21:56:27,325 - INFO - allennlp.common.params - dataset_reader.token_indexers.tokens.lowercase_tokens = True
+2022-07-20 21:56:27,325 - INFO - allennlp.common.params - dataset_reader.token_indexers.tokens.start_tokens = None
+2022-07-20 21:56:27,325 - INFO - allennlp.common.params - dataset_reader.token_indexers.tokens.end_tokens = None
+2022-07-20 21:56:27,325 - INFO - allennlp.common.params - dataset_reader.token_indexers.tokens.feature_name = text
+2022-07-20 21:56:27,325 - INFO - allennlp.common.params - dataset_reader.token_indexers.tokens.default_value = THIS IS A REALLY UNLIKELY VALUE THAT HAS TO BE A STRING
+2022-07-20 21:56:27,325 - INFO - allennlp.common.params - dataset_reader.token_indexers.tokens.token_min_padding_length = 0
+2022-07-20 21:56:27,325 - INFO - allennlp.common.params - dataset_reader.combine_input_fields = None
+2022-07-20 21:56:27,932 - INFO - allennlp.common.params - train_data_path = https://s3-us-west-2.amazonaws.com/allennlp/datasets/snli/snli_1.0_dev.jsonl
+2022-07-20 21:56:27,932 - INFO - allennlp.common.params - vocabulary = None
+2022-07-20 21:56:27,932 - INFO - allennlp.common.params - datasets_for_vocab_creation = None
+2022-07-20 21:56:27,932 - INFO - allennlp.common.params - validation_dataset_reader = None
+2022-07-20 21:56:27,932 - INFO - allennlp.common.params - validation_data_path = https://s3-us-west-2.amazonaws.com/allennlp/datasets/snli/snli_1.0_dev.jsonl
+2022-07-20 21:56:27,932 - INFO - allennlp.common.params - validation_data_loader = None
+2022-07-20 21:56:27,932 - INFO - allennlp.common.params - test_data_path = None
+2022-07-20 21:56:27,932 - INFO - allennlp.common.params - evaluate_on_test = False
+2022-07-20 21:56:27,933 - INFO - allennlp.training.util - Reading training data from https://s3-us-west-2.amazonaws.com/allennlp/datasets/snli/snli_1.0_dev.jsonl
+2022-07-20 21:56:28,251 - INFO - allennlp.data.dataset_readers.snli - Reading SNLI instances from jsonl dataset at: /home/kevin/.allennlp/cache/d62e9805c21b0d8bc720ed5484b4907bbf740a2fe3351c8f41583822a54fbb76.07ccd1720fbe07137833cd627398fb7e2687bdcbad963d71cae8c97a37f76687
+2022-07-20 21:56:31,899 - INFO - allennlp.training.util - Reading validation data from https://s3-us-west-2.amazonaws.com/allennlp/datasets/snli/snli_1.0_dev.jsonl
+2022-07-20 21:56:32,224 - INFO - allennlp.data.dataset_readers.snli - Reading SNLI instances from jsonl dataset at: /home/kevin/.allennlp/cache/d62e9805c21b0d8bc720ed5484b4907bbf740a2fe3351c8f41583822a54fbb76.07ccd1720fbe07137833cd627398fb7e2687bdcbad963d71cae8c97a37f76687
+2022-07-20 21:56:35,459 - INFO - allennlp.data.vocabulary - Fitting token dictionary from dataset.
+2022-07-20 21:56:35,934 - INFO - allennlp.common.params - model.type = esim
+2022-07-20 21:56:35,935 - INFO - allennlp.common.params - model.regularizer = None
+2022-07-20 21:56:35,935 - INFO - allennlp.common.params - model.text_field_embedder.type = basic
+2022-07-20 21:56:35,935 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.type = embedding
+2022-07-20 21:56:35,936 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.embedding_dim = 300
+2022-07-20 21:56:35,936 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.num_embeddings = None
+2022-07-20 21:56:35,936 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.projection_dim = None
+2022-07-20 21:56:35,937 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.weight = None
+2022-07-20 21:56:35,937 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.padding_index = None
+2022-07-20 21:56:35,937 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.trainable = True
+2022-07-20 21:56:35,937 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.max_norm = None
+2022-07-20 21:56:35,937 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.norm_type = 2.0
+2022-07-20 21:56:35,937 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.scale_grad_by_freq = False
+2022-07-20 21:56:35,937 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.sparse = False
+2022-07-20 21:56:35,937 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.vocab_namespace = tokens
+2022-07-20 21:56:35,937 - INFO - allennlp.common.params - model.text_field_embedder.token_embedders.tokens.pretrained_file = https://s3-us-west-2.amazonaws.com/allennlp/datasets/glove/glove.840B.300d.txt.gz
+2022-07-20 21:56:35,938 - INFO - allennlp.modules.token_embedders.embedding - Reading pretrained embeddings from file
+2022-07-20 21:57:20,614 - INFO - allennlp.modules.token_embedders.embedding - Initializing pre-trained embedding layer
+2022-07-20 21:57:20,682 - INFO - allennlp.modules.token_embedders.embedding - Pretrained embeddings were found for 6259 out of 6316 tokens
+2022-07-20 21:57:20,685 - INFO - allennlp.common.params - model.encoder.type = lstm
+2022-07-20 21:57:20,685 - INFO - allennlp.common.params - model.encoder.input_size = 300
+2022-07-20 21:57:20,685 - INFO - allennlp.common.params - model.encoder.hidden_size = 300
+2022-07-20 21:57:20,685 - INFO - allennlp.common.params - model.encoder.num_layers = 1
+2022-07-20 21:57:20,685 - INFO - allennlp.common.params - model.encoder.bias = True
+2022-07-20 21:57:20,685 - INFO - allennlp.common.params - model.encoder.dropout = 0.0
+2022-07-20 21:57:20,685 - INFO - allennlp.common.params - model.encoder.bidirectional = True
+2022-07-20 21:57:20,685 - INFO - allennlp.common.params - model.encoder.stateful = False
+2022-07-20 21:57:20,692 - INFO - allennlp.common.params - model.matrix_attention.type = dot_product
+2022-07-20 21:57:20,692 - INFO - allennlp.common.params - model.projection_feedforward.input_dim = 2400
+2022-07-20 21:57:20,693 - INFO - allennlp.common.params - model.projection_feedforward.num_layers = 1
+2022-07-20 21:57:20,693 - INFO - allennlp.common.params - model.projection_feedforward.hidden_dims = 300
+2022-07-20 21:57:20,693 - INFO - allennlp.common.params - model.projection_feedforward.activations = relu
+2022-07-20 21:57:20,693 - INFO - allennlp.common.params - type = relu
+2022-07-20 21:57:20,693 - INFO - allennlp.common.params - model.projection_feedforward.dropout = 0.0
+2022-07-20 21:57:20,701 - INFO - allennlp.common.params - model.inference_encoder.type = lstm
+2022-07-20 21:57:20,701 - INFO - allennlp.common.params - model.inference_encoder.input_size = 300
+2022-07-20 21:57:20,701 - INFO - allennlp.common.params - model.inference_encoder.hidden_size = 300
+2022-07-20 21:57:20,701 - INFO - allennlp.common.params - model.inference_encoder.num_layers = 1
+2022-07-20 21:57:20,701 - INFO - allennlp.common.params - model.inference_encoder.bias = True
+2022-07-20 21:57:20,701 - INFO - allennlp.common.params - model.inference_encoder.dropout = 0.0
+2022-07-20 21:57:20,701 - INFO - allennlp.common.params - model.inference_encoder.bidirectional = True
+2022-07-20 21:57:20,701 - INFO - allennlp.common.params - model.inference_encoder.stateful = False
+2022-07-20 21:57:20,710 - INFO - allennlp.common.params - model.output_feedforward.input_dim = 2400
+2022-07-20 21:57:20,711 - INFO - allennlp.common.params - model.output_feedforward.num_layers = 1
+2022-07-20 21:57:20,711 - INFO - allennlp.common.params - model.output_feedforward.hidden_dims = 300
+2022-07-20 21:57:20,711 - INFO - allennlp.common.params - model.output_feedforward.activations = relu
+2022-07-20 21:57:20,711 - INFO - allennlp.common.params - type = relu
+2022-07-20 21:57:20,711 - INFO - allennlp.common.params - model.output_feedforward.dropout = 0.5
+2022-07-20 21:57:20,715 - INFO - allennlp.common.params - model.output_logit.input_dim = 300
+2022-07-20 21:57:20,716 - INFO - allennlp.common.params - model.output_logit.num_layers = 1
+2022-07-20 21:57:20,716 - INFO - allennlp.common.params - model.output_logit.hidden_dims = 3
+2022-07-20 21:57:20,716 - INFO - allennlp.common.params - model.output_logit.activations = linear
+2022-07-20 21:57:20,716 - INFO - allennlp.common.params - type = linear
+2022-07-20 21:57:20,716 - INFO - allennlp.common.params - model.output_logit.dropout = 0.0
+2022-07-20 21:57:20,716 - INFO - allennlp.common.params - model.dropout = 0.5
