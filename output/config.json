@@ -25,44 +25,22 @@
             "input_size": 300,
             "num_layers": 1
         },
-        "initializer": [
-            [
-                ".*linear_layers.*weight",
-                {
-                    "type": "xavier_uniform"
-                }
-            ],
-            [
-                ".*linear_layers.*bias",
-                {
-                    "type": "zero"
-                }
-            ],
-            [
-                ".*weight_ih.*",
-                {
-                    "type": "xavier_uniform"
-                }
-            ],
-            [
-                ".*weight_hh.*",
-                {
-                    "type": "orthogonal"
-                }
-            ],
-            [
-                ".*bias_ih.*",
-                {
-                    "type": "zero"
-                }
-            ],
-            [
-                ".*bias_hh.*",
-                {
-                    "type": "lstm_hidden_bias"
-                }
+        "initializer": {
+            "regexes": [
+                [
+                    ".*linear_layers.*weight",
+                    {
+                        "type": "xavier_normal"
+                    }
+                ],
+                [
+                    ".*token_embedder_tokens\\._projection.*weight",
+                    {
+                        "type": "xavier_normal"
+                    }
+                ]
             ]
-        ],
+        },
         "matrix_attention": {
             "type": "dot_product"
         },
