@@ -23,42 +23,14 @@ import torch.nn.functional as F
 
 #######################################################
 
-@Model.register("kevin_mod")
-class kevin_mod(Model):
-    """
-    This ``Model`` implements the ESIM sequence model described in `"Enhanced LSTM for Natural Language Inference"
-    <https://www.semanticscholar.org/paper/Enhanced-LSTM-for-Natural-Language-Inference-Chen-Zhu/83e7654d545fbbaaf2328df365a781fb67b841b4>`_
-    by Chen et al., 2017.
 
-    Parameters
-    ----------
-    vocab : ``Vocabulary``
-    text_field_embedder : ``TextFieldEmbedder``
-        Used to embed the ``premise`` and ``hypothesis`` ``TextFields`` we get as input to the
-        model.
-    encoder : ``Seq2SeqEncoder``
-        Used to encode the premise and hypothesis.
-    similarity_function : ``SimilarityFunction``
-        This is the similarity function used when computing the similarity matrix between encoded
-        words in the premise and words in the hypothesis.
-    projection_feedforward : ``FeedForward``
-        The feedforward network used to project down the encoded and enhanced premise and hypothesis.
-    inference_encoder : ``Seq2SeqEncoder``
-        Used to encode the projected premise and hypothesis for prediction.
-    output_feedforward : ``FeedForward``
-        Used to prepare the concatenated premise and hypothesis for prediction.
-    output_logit : ``FeedForward``
-        This feedforward network computes the output logits.
-    dropout : ``float``, optional (default=0.5)
-        Dropout percentage to use.
-    initializer : ``InitializerApplicator``, optional (default=``InitializerApplicator()``)
-        Used to initialize the model parameters.
-    regularizer : ``RegularizerApplicator``, optional (default=``None``)
-        If provided, will be used to calculate the regularization penalty during training.
-    """
-    def __init__(self, vocab: Vocabulary,
+@Model.register("kevin_mod")
+class kevin_mod(Model): 
+
+    def __init__(self, hidden_dim:int, vocab: Vocabulary,
                  text_field_embedder: TextFieldEmbedder,
                  initializer: InitializerApplicator = InitializerApplicator(),
+                 num_layers=2, bidirectional=True, dropout_rate=0.0, num_classification=3,
                  regularizer: Optional[RegularizerApplicator] = None) -> None:
         super().__init__(vocab, regularizer)
 
@@ -67,41 +39,21 @@ class kevin_mod(Model):
         self._loss = torch.nn.CrossEntropyLoss()
 
         initializer(self)
-    
-    #this is to build the LSTM and the feed forward 
-    #this is where I put in my LSTM layer and feed forward layer
-    #figure 3 in SNLI 
 
-#########################################################################
 
-#7/27 added 
-
-class LSTM_Module(nn.Module):
-    def __init__(self, hidden_dim, num_layers=2, bidirectional=True, dropout_rate=0.0):
-        super(LSTM_Module, self).__init__()
         self.num_layers = num_layers
-        self.num_directions = bidirectional + 1
+        self.num_directions = 2 if bidirectional else 1 
         self.hidden_dim = hidden_dim
         
         self.LSTM = nn.LSTM(input_size=hidden_dim, hidden_size=hidden_dim, num_layers=num_layers, batch_first=True, 
-        bidirectional=bidirectional, dropout=dropout_rate)
+        bidirectional=bidirectional, dropout=dropout_rate) 
 
         self.fc = nn.Linear(hidden_dim * self.num_directions * self.num_layers * 2, hidden_dim)
-        
-    def forward(self, a, b):
-        _, (_, v1) = self.LSTM(a)
-        _, (_, v2) = self.LSTM(b)
-        
-#         v1 = torch.squeeze(v1, dim=0)
-#         v2 = torch.squeeze(v2, dim=0)
-        v1 = v1.permute(1, 0, 2).contiguous().view((-1, self.hidden_dim * self.num_directions * self.num_layers))
-        v2 = v2.permute(1, 0, 2).contiguous().view((-1, self.hidden_dim * self.num_directions * self.num_layers))
-        
-        v1_cat_v2 = torch.cat((v1, v2), dim=1) # v1_cat_v2: (batch_size x (hidden_dim * 2))
-        h = self.fc(v1_cat_v2)
-        h = F.relu(h)
-        
-        return h
+
+        self.fc2= nn.Linear(hidden_dim , hidden_dim)
+
+        self.fc3= nn.Linear(hidden_dim, num_classification)
+   
 
 
 
@@ -144,8 +96,26 @@ class LSTM_Module(nn.Module):
         premise_mask = get_text_field_mask(premise).float()
         hypothesis_mask = get_text_field_mask(hypothesis).float()
 
-        label_logits = None #this is where I put in three calsses 
+
+        _, (v1,_) = self.LSTM(embedded_premise) #these are independent 
+        _, (v2,_) = self.LSTM(embedded_hypothesis)
+    
+#         v1 = torch.squeeze(v1, dim=0)
+#         v2 = torch.squeeze(v2, dim=0)
+        v1 = v1.view((-1, self.hidden_dim * self.num_directions * self.num_layers))
+        v2 = v2.view((-1, self.hidden_dim * self.num_directions * self.num_layers))
+        
+        v1_cat_v2 = torch.cat((v1, v2), dim=1) # v1_cat_v2: (batch_size x (hidden_dim * 2))
+        h = self.fc(v1_cat_v2)
+        h = F.tanh(h)
+        h = self.fc2(h)
+        h = F.tanh(h)
+        label_logits = self.fc3(h) 
+        
+
         label_probs = torch.nn.functional.softmax(label_logits, dim=-1)
+
+
 
         output_dict = {"label_logits": label_logits, "label_probs": label_probs}
 

@@ -9,22 +9,8 @@
         }
     },
     "model": {
-        "type": "esim",
-        "dropout": 0.5,
-        "encoder": {
-            "type": "lstm",
-            "bidirectional": true,
-            "hidden_size": 300,
-            "input_size": 300,
-            "num_layers": 1
-        },
-        "inference_encoder": {
-            "type": "lstm",
-            "bidirectional": true,
-            "hidden_size": 300,
-            "input_size": 300,
-            "num_layers": 1
-        },
+        "type": "kevin_mod",
+        "hidden_dim": 100,
         "initializer": {
             "regexes": [
                 [
@@ -41,35 +27,14 @@
                 ]
             ]
         },
-        "matrix_attention": {
-            "type": "dot_product"
-        },
-        "output_feedforward": {
-            "activations": "relu",
-            "dropout": 0.5,
-            "hidden_dims": 300,
-            "input_dim": 2400,
-            "num_layers": 1
-        },
-        "output_logit": {
-            "activations": "linear",
-            "hidden_dims": 3,
-            "input_dim": 300,
-            "num_layers": 1
-        },
-        "projection_feedforward": {
-            "activations": "relu",
-            "hidden_dims": 300,
-            "input_dim": 2400,
-            "num_layers": 1
-        },
         "text_field_embedder": {
             "token_embedders": {
                 "tokens": {
                     "type": "embedding",
                     "embedding_dim": 300,
-                    "pretrained_file": "https://s3-us-west-2.amazonaws.com/allennlp/datasets/glove/glove.840B.300d.txt.gz",
-                    "trainable": true
+                    "pretrained_file": "https://allennlp.s3.amazonaws.com/datasets/glove/glove.840B.300d.txt.gz",
+                    "projection_dim": 100,
+                    "trainable": false
                 }
             }
         }
