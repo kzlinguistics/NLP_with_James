@@ -30,7 +30,7 @@ class kevin_mod(Model):
     def __init__(self, hidden_dim:int, vocab: Vocabulary,
                  text_field_embedder: TextFieldEmbedder,
                  initializer: InitializerApplicator = InitializerApplicator(),
-                 num_layers=2, bidirectional=True, dropout_rate=0.0, num_classification=3,
+                 num_layers=1, bidirectional=FALSE, dropout_rate=0.0, num_classification=3,
                  regularizer: Optional[RegularizerApplicator] = None) -> None:
         super().__init__(vocab, regularizer)
 
@@ -48,11 +48,11 @@ class kevin_mod(Model):
         self.LSTM = nn.LSTM(input_size=hidden_dim, hidden_size=hidden_dim, num_layers=num_layers, batch_first=True, 
         bidirectional=bidirectional, dropout=dropout_rate) 
 
-        self.fc = nn.Linear(hidden_dim * self.num_directions * self.num_layers * 2, hidden_dim)
+        self.fc = nn.Linear(hidden_dim * self.num_directions * self.num_layers * 2, hidden_dim*2)
 
-        self.fc2= nn.Linear(hidden_dim , hidden_dim)
+        self.fc2= nn.Linear(hidden_dim*2 , hidden_dim*2)
 
-        self.fc3= nn.Linear(hidden_dim, num_classification)
+        self.fc3= nn.Linear(hidden_dim*2, num_classification)
    
 
 
@@ -109,6 +109,7 @@ class kevin_mod(Model):
         h = self.fc(v1_cat_v2)
         h = F.tanh(h)
         h = self.fc2(h)
+        h = F.tanh(h)
         h = F.tanh(h)
         label_logits = self.fc3(h) 
         
