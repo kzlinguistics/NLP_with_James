@@ -30,7 +30,7 @@ class kevin_mod(Model):
     def __init__(self, hidden_dim:int, vocab: Vocabulary,
                  text_field_embedder: TextFieldEmbedder,
                  initializer: InitializerApplicator = InitializerApplicator(),
-                 num_layers=1, bidirectional=FALSE, dropout_rate=0.0, num_classification=3,
+                 num_layers=1, bidirectional=False, dropout_rate=0.0, num_classification=3,
                  regularizer: Optional[RegularizerApplicator] = None) -> None:
         super().__init__(vocab, regularizer)
 
