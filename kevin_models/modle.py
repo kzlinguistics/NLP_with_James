@@ -11,6 +11,17 @@ from allennlp.nn import InitializerApplicator, RegularizerApplicator
 from allennlp.nn.util import get_text_field_mask, masked_softmax, weighted_sum, replace_masked_values
 from allennlp.training.metrics import CategoricalAccuracy
 
+############################################# 
+
+#7/27- homework 
+
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+#input LSTM 
+
+#######################################################
 
 @Model.register("kevin_mod")
 class kevin_mod(Model):
@@ -61,6 +72,40 @@ class kevin_mod(Model):
     #this is where I put in my LSTM layer and feed forward layer
     #figure 3 in SNLI 
 
+#########################################################################
+
+#7/27 added 
+
+class LSTM_Module(nn.Module):
+    def __init__(self, hidden_dim, num_layers=2, bidirectional=True, dropout_rate=0.0):
+        super(LSTM_Module, self).__init__()
+        self.num_layers = num_layers
+        self.num_directions = bidirectional + 1
+        self.hidden_dim = hidden_dim
+        
+        self.LSTM = nn.LSTM(input_size=hidden_dim, hidden_size=hidden_dim, num_layers=num_layers, batch_first=True, 
+        bidirectional=bidirectional, dropout=dropout_rate)
+
+        self.fc = nn.Linear(hidden_dim * self.num_directions * self.num_layers * 2, hidden_dim)
+        
+    def forward(self, a, b):
+        _, (_, v1) = self.LSTM(a)
+        _, (_, v2) = self.LSTM(b)
+        
+#         v1 = torch.squeeze(v1, dim=0)
+#         v2 = torch.squeeze(v2, dim=0)
+        v1 = v1.permute(1, 0, 2).contiguous().view((-1, self.hidden_dim * self.num_directions * self.num_layers))
+        v2 = v2.permute(1, 0, 2).contiguous().view((-1, self.hidden_dim * self.num_directions * self.num_layers))
+        
+        v1_cat_v2 = torch.cat((v1, v2), dim=1) # v1_cat_v2: (batch_size x (hidden_dim * 2))
+        h = self.fc(v1_cat_v2)
+        h = F.relu(h)
+        
+        return h
+
+
+
+###################################################################################
     def forward(self,  # type: ignore
                 premise: Dict[str, torch.LongTensor],
                 hypothesis: Dict[str, torch.LongTensor],
